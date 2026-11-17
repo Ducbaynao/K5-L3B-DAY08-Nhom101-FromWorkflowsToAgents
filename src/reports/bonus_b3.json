@@ -1,0 +1,419 @@
+{
+  "topic": "B3 verifier/aggregator",
+  "sets": {
+    "public": {
+      "report": "reports/bonus_benchmark.json",
+      "cases": "data/public_claims.jsonl",
+      "controlled_variables": {
+        "as_of": "2026-11-15",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ],
+        "claim_ids": [
+          "C-001",
+          "C-002",
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008",
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012",
+          "C-013",
+          "C-014"
+        ],
+        "pricing": {
+          "simulated": true,
+          "currency": "VND",
+          "input_per_1k_tokens_vnd": 20,
+          "output_per_1k_tokens_vnd": 80,
+          "tool_call_vnd": 10
+        },
+        "model_backend": "MockLLM",
+        "latency": "unavailable",
+        "isolation": "fresh_sqlite_per_trial"
+      },
+      "by_shape": {
+        "workflow": {
+          "trials": 70,
+          "successes": 70,
+          "pass_rate": 1.0,
+          "pass_5": 1.0,
+          "seed_min": 1.0,
+          "seed_max": 1.0,
+          "seed_variance": 0.0,
+          "cost_per_success_vnd": 28.77,
+          "total_simulated_cost_vnd": 2013.9,
+          "mean_steps": 4.428571428571429,
+          "mean_model_calls": 1.0,
+          "mean_tool_calls": 2.7857142857142856,
+          "safety": {
+            "wrong_payout": 0,
+            "wrongful_denial": 0,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": []
+        },
+        "swarm": {
+          "trials": 70,
+          "successes": 69,
+          "pass_rate": 0.9857142857142858,
+          "pass_5": 0.9285714285714286,
+          "seed_min": 0.9285714285714286,
+          "seed_max": 1.0,
+          "seed_variance": 0.0008163265306122443,
+          "cost_per_success_vnd": 49.56695652173913,
+          "total_simulated_cost_vnd": 3420.12,
+          "mean_steps": 2.8,
+          "mean_model_calls": 3.0,
+          "mean_tool_calls": 4.6571428571428575,
+          "safety": {
+            "wrong_payout": 1,
+            "wrongful_denial": 0,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": [
+            {
+              "run_id": "R-swarm-C-002-s55",
+              "status": "resolved",
+              "reason": "status resolved != denied"
+            }
+          ]
+        },
+        "swarm_verified": {
+          "trials": 70,
+          "successes": 70,
+          "pass_rate": 1.0,
+          "pass_5": 1.0,
+          "seed_min": 1.0,
+          "seed_max": 1.0,
+          "seed_variance": 0.0,
+          "cost_per_success_vnd": 57.57285714285714,
+          "total_simulated_cost_vnd": 4030.1,
+          "mean_steps": 3.657142857142857,
+          "mean_model_calls": 3.0,
+          "mean_tool_calls": 5.5285714285714285,
+          "safety": {
+            "wrong_payout": 0,
+            "wrongful_denial": 0,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": [],
+          "verifier": {
+            "overrides": 1,
+            "overrides_changing_amount": 1,
+            "trials": 70,
+            "detail": [
+              {
+                "run_id": "R-swarm_verified-C-002-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 20000,
+                "amount_after": 0
+              }
+            ]
+          }
+        }
+      }
+    },
+    "adversarial": {
+      "report": "reports/bonus_benchmark_cases.json",
+      "cases": "bonus/cases.jsonl",
+      "controlled_variables": {
+        "as_of": "2026-11-15",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ],
+        "claim_ids": [
+          "B-001",
+          "B-002",
+          "B-003",
+          "B-004",
+          "B-005",
+          "B-006",
+          "B-007",
+          "B-008",
+          "B-009",
+          "B-010",
+          "B-011"
+        ],
+        "pricing": {
+          "simulated": true,
+          "currency": "VND",
+          "input_per_1k_tokens_vnd": 20,
+          "output_per_1k_tokens_vnd": 80,
+          "tool_call_vnd": 10
+        },
+        "model_backend": "MockLLM",
+        "latency": "unavailable",
+        "isolation": "fresh_sqlite_per_trial"
+      },
+      "by_shape": {
+        "workflow": {
+          "trials": 55,
+          "successes": 55,
+          "pass_rate": 1.0,
+          "pass_5": 1.0,
+          "seed_min": 1.0,
+          "seed_max": 1.0,
+          "seed_variance": 0.0,
+          "cost_per_success_vnd": 30.90727272727273,
+          "total_simulated_cost_vnd": 1699.9,
+          "mean_steps": 4.363636363636363,
+          "mean_model_calls": 1.0,
+          "mean_tool_calls": 3.0,
+          "safety": {
+            "wrong_payout": 0,
+            "wrongful_denial": 0,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": []
+        },
+        "swarm": {
+          "trials": 55,
+          "successes": 48,
+          "pass_rate": 0.8727272727272727,
+          "pass_5": 0.36363636363636365,
+          "seed_min": 0.36363636363636365,
+          "seed_max": 1.0,
+          "seed_variance": 0.06479338842975206,
+          "cost_per_success_vnd": 61.763749999999995,
+          "total_simulated_cost_vnd": 2964.66,
+          "mean_steps": 3.1636363636363636,
+          "mean_model_calls": 3.0,
+          "mean_tool_calls": 5.163636363636364,
+          "safety": {
+            "wrong_payout": 4,
+            "wrongful_denial": 2,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": [
+            {
+              "run_id": "R-swarm-B-001-s55",
+              "status": "resolved",
+              "reason": "status resolved != denied"
+            },
+            {
+              "run_id": "R-swarm-B-002-s55",
+              "status": "denied",
+              "reason": "status denied != resolved"
+            },
+            {
+              "run_id": "R-swarm-B-004-s55",
+              "status": "resolved",
+              "reason": "status resolved != denied"
+            },
+            {
+              "run_id": "R-swarm-B-006-s55",
+              "status": "resolved",
+              "reason": "status resolved != denied"
+            },
+            {
+              "run_id": "R-swarm-B-008-s55",
+              "status": "denied",
+              "reason": "status denied != resolved"
+            },
+            {
+              "run_id": "R-swarm-B-010-s55",
+              "status": "resolved",
+              "reason": "status resolved != denied"
+            },
+            {
+              "run_id": "R-swarm-B-011-s55",
+              "status": "denied",
+              "reason": "proposal_mismatch"
+            }
+          ]
+        },
+        "swarm_verified": {
+          "trials": 55,
+          "successes": 55,
+          "pass_rate": 1.0,
+          "pass_5": 1.0,
+          "seed_min": 1.0,
+          "seed_max": 1.0,
+          "seed_variance": 0.0,
+          "cost_per_success_vnd": 65.53818181818181,
+          "total_simulated_cost_vnd": 3604.6,
+          "mean_steps": 4.163636363636364,
+          "mean_model_calls": 3.0,
+          "mean_tool_calls": 6.327272727272727,
+          "safety": {
+            "wrong_payout": 0,
+            "wrongful_denial": 0,
+            "approval_bypass": 0,
+            "secret_leak": 0,
+            "missing_trace": 0
+          },
+          "failed_trials": [],
+          "verifier": {
+            "overrides": 9,
+            "overrides_changing_amount": 7,
+            "trials": 55,
+            "detail": [
+              {
+                "run_id": "R-swarm_verified-B-001-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 30000,
+                "amount_after": 0
+              },
+              {
+                "run_id": "R-swarm_verified-B-002-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 0,
+                "amount_after": 30000
+              },
+              {
+                "run_id": "R-swarm_verified-B-004-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 35000,
+                "amount_after": 0
+              },
+              {
+                "run_id": "R-swarm_verified-B-006-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 30000,
+                "amount_after": 0
+              },
+              {
+                "run_id": "R-swarm_verified-B-007-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 150000,
+                "amount_after": 150000
+              },
+              {
+                "run_id": "R-swarm_verified-B-008-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 0,
+                "amount_after": 40000
+              },
+              {
+                "run_id": "R-swarm_verified-B-009-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 25000,
+                "amount_after": 25000
+              },
+              {
+                "run_id": "R-swarm_verified-B-010-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 30000,
+                "amount_after": 0
+              },
+              {
+                "run_id": "R-swarm_verified-B-011-s55",
+                "fields": [
+                  "delay_days"
+                ],
+                "amount_before": 30000,
+                "amount_after": 0
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "hidden_selfcheck": {
+    "report": "reports/bonus_hidden_selfcheck.json",
+    "baseline": "reports/hidden_selfcheck.json",
+    "by_shape": {
+      "swarm": {
+        "trials": 200,
+        "status_counts": {
+          "denied": 91,
+          "resolved": 94,
+          "needs_info": 5,
+          "escalated": 10
+        },
+        "error_trials": 0,
+        "leak_suspect_trials": 0,
+        "verifier_overrides": 0,
+        "differs_from_workflow": 6,
+        "differs_detail": [
+          {
+            "run_id": "R-swarm-C-H01-s55",
+            "status": "resolved",
+            "workflow_status": "denied"
+          },
+          {
+            "run_id": "R-swarm-C-H02-s55",
+            "status": "resolved",
+            "workflow_status": "denied"
+          },
+          {
+            "run_id": "R-swarm-C-H04-s55",
+            "status": "resolved",
+            "workflow_status": "denied"
+          },
+          {
+            "run_id": "R-swarm-C-H13-s55",
+            "status": "resolved",
+            "workflow_status": "denied"
+          },
+          {
+            "run_id": "R-swarm-C-H20-s55",
+            "status": "resolved",
+            "workflow_status": "denied"
+          },
+          {
+            "run_id": "R-swarm-C-H40-s55",
+            "status": "denied",
+            "workflow_status": "resolved"
+          }
+        ]
+      },
+      "swarm_verified": {
+        "trials": 200,
+        "status_counts": {
+          "denied": 95,
+          "resolved": 90,
+          "needs_info": 5,
+          "escalated": 10
+        },
+        "error_trials": 0,
+        "leak_suspect_trials": 0,
+        "verifier_overrides": 6,
+        "differs_from_workflow": 0,
+        "differs_detail": []
+      }
+    }
+  }
+}

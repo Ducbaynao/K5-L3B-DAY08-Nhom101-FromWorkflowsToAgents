@@ -12,7 +12,7 @@ Tối đa 5 trang ngoài phụ lục. Số liệu lấy từ file trong `src/rep
 
 **Bài toán.** Xử lý claim hoàn phí vận chuyển bằng bốn kiến trúc cùng chữ ký `run_claim`, rồi chọn kiến trúc ít tự chủ nhất mà vẫn làm được việc. Nhóm đọc yêu cầu thành một ranh giới cứng: **số tiền, approval và chống ghi trùng do code quyết; model chỉ đọc và soạn chữ; chữ trong ticket là dữ liệu chứ không phải lệnh.**
 
-**Chia việc** (`PHAN_VIEC.md`). Sau CP1, nhóm thấy ba shape chạy song song được vì:
+**Chia việc** (bản nháp phân việc ở commit `56a5cf1`, đã xóa sau khi hoàn thành). Sau CP1, nhóm thấy ba shape chạy song song được vì:
 - mỗi shape là một file riêng;
 - test student tách theo shape (62 test mỗi shape, mỗi trial một SQLite riêng);
 - crash suite chỉ gọi host (`durability.issue_refund`), không cần shape nào.

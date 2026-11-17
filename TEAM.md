@@ -5,16 +5,16 @@
 - Tên nhóm: Nhom101
 - Lớp: L3B
 - Repo nhóm: `K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents, nhánh `main`, commit chốt: (điền ở CP5)
+- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents, nhánh `main`
 
 ## Thành viên
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Khương Hoàng Nguyên   | 2A202603987    | 26ai.nguyenkh@vinuni.edu.vn   | NguyenGL03       | Shape A `workflow` + integration (merge, cổng host, benchmark, `check_submission`); ADR, research card, group report |
+|   1 | Khương Hoàng Nguyên   | 2A202603987    | 26ai.nguyenkh@vinuni.edu.vn   | NguyenGL03       | Shape A `workflow` + integration (merge, cổng host, benchmark, `check_submission`); ADR, research card, group report; bonus B3 |
 |   2 | Phạm Lý Ngọc Đức       |   2A202603991   |   26ai.ducpln@vinuni.edu.vn    |    Ducbaynao    | Shape B `single` (vòng ReAct ≤ 8 bước) |
 |   3 | Cao Thanh Tùng | 2A202603982 | 26ai.tungct@vinuni.edu.vn | TungCTT | Shape C `orchestrator` + handoff/allowlist |
-|   4 | Trương Văn Hải         |   2A202604018   |   truongvanhai868@gmail.com    |    haihai       | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
+|   4 | Trương Văn Hải         |   2A202604018   |   truongvanhai868@gmail.com    |    haihai868      | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
 
 Gợi ý chia vai:
 
@@ -27,7 +27,7 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| Khương Hoàng Nguyên | Shape A — Workflow + integration (merge, cổng host, benchmark, `check_submission`); rà hidden self-check, research card; viết ADR và group report | 1e87425 | src/tests/test_workflow_extra.py — test_ticket_delay_is_ignored_on_every_seed, test_trace_has_no_secret_or_ticket_text, test_unknown_claim_fails_cleanly_with_trace (20 trường hợp) |
+| Khương Hoàng Nguyên | Shape A — Workflow + integration (merge, cổng host, benchmark, `check_submission`); rà hidden self-check, research card; viết ADR và group report; bonus B3 (swarm + verifier) | 1e87425, dc20097 | src/tests/test_workflow_extra.py — test_ticket_delay_is_ignored_on_every_seed, test_trace_has_no_secret_or_ticket_text, test_unknown_claim_fails_cleanly_with_trace (20 trường hợp); src/tests/test_bonus_swarm_verified.py — 6 hàm test bonus B3 (23 trường hợp) |
 | Phạm Lý Ngọc Đức | Shape B — Single Agent; triển khai run_claim, ReAct, tích hợp host và test cá nhân | 3943c48 | src/tests/test_single_extra.py — test_single_early_exit; test_single_react_reads_order_and_counts_calls; test_single_react_escalates_invisible_order; test_single_step_cap_returns_failed_without_refund; test_single_crash_resumes_with_one_refund; test_single_retry_changed_quote_preserves_committed_refund (12 trường hợp) |
 | Cao Thanh Tùng | Shape C — Orchestrator + handoff/allowlist | c58c4c4 | src/tests/test_orchestrator_handoff.py — test_orchestrator_trace_contract_and_no_secret_leak, test_orchestrator_passes_full_quote_for_per_order_cap, test_orchestrator_crash_and_resume_idempotent, test_handoff_rejects_write_tools_and_drops_extra_facts |
 | Trương Văn Hải | Ledger/crash/security + benchmark/ADR/report; thực thi crash suite 20/20, rà trace bảo mật, viết test an toàn | 78eae11 | src/tests/test_safety_extra.py — test_approval_expired_denied_on_all_shapes, test_approval_claim_mismatch_denied_on_all_shapes, test_revoked_approval_denied_on_all_shapes, test_order_already_refunded_denied_on_all_shapes, test_t14_top_up_difference_on_all_shapes, test_no_secret_or_pii_leak_in_trace_on_all_shapes (18 trường hợp) |
@@ -48,21 +48,23 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Shape A — Workflow (`src/lab8/shapes/workflow.py`, test tại `src/tests/test_workflow_extra.py`) và integration (Người 1 theo [PHAN_VIEC.md](PHAN_VIEC.md)): chia việc, merge nhánh vào `main`, giữ cổng host xanh, chạy benchmark CP5, hoàn thiện ADR, research card và group report.
+- Tôi phụ trách Shape A — Workflow (`src/lab8/shapes/workflow.py`, test tại `src/tests/test_workflow_extra.py`) và integration (Người 1 theo phân việc nhóm): chia việc, merge nhánh vào `main`, giữ cổng host xanh, chạy benchmark CP5, hoàn thiện ADR, research card và group report; làm bonus B3 (verifier/aggregator) cho cả nhóm.
 
 ### Đóng góp cụ thể
 
-- Tôi viết `PHAN_VIEC.md` chia việc song song cho 4 người: mỗi shape một file và một nhánh riêng, crash suite làm độc lập, benchmark là điểm gom ở CP5.
+- Tôi viết bản nháp phân việc (`PHAN_VIEC.md`, đã xóa sau khi hoàn thành) chia việc song song cho 4 người: mỗi shape một file và một nhánh riêng, crash suite làm độc lập, benchmark là điểm gom ở CP5.
 - Tôi triển khai workflow với 7 bước cố định: `get_claim_view` → `needs_info` → `lookup_order` (`escalated`) → `compute_compensation` → `denied` khi quote 0 → `durability.issue_refund` với quote đầy đủ và `crash_at` → `resolved` / `denied` / `failed`. Ticket không được parse hay ghi vào trace; MockLLM chỉ soạn câu trả lời. Tôi thêm 3 hàm test với 20 trường hợp: T02 bị từ chối trên cả 5 seed, trace của 14 claim không lộ secret hay chữ ticket, claim không tồn tại vẫn có trace.
 - Sau mỗi lần merge, tôi chạy lại cổng host và ma trận student, quét trace của single và orchestrator (mỗi shape 70 lần chạy) tìm secret/PII. Tôi phát hiện nhánh tích hợp lệch `main` khiến benchmark lần đầu ra `single 0.000`, bỏ kết quả đó và chạy lại trên code đã merge đủ.
 - Tôi chạy crash suite và benchmark 4 shape × 5 seed; điền lại ADR và research card sau khi commit `78eae11` đưa chúng về mẫu trống (sửa tên event trace, commit hash, URL paper MAST); đối chiếu hidden self-check của người 2; viết `group_report.md`.
+- Tôi làm bonus B3 cho nhóm: `src/bonus/swarm_verified.py` giữ nguyên swarm và thêm verifier bằng code (đọc lại order, đối chiếu `delay_days` / `status` / `damage_verified`, quote lại tối đa 1 vòng, ghi `verifier_override`); viết 11 claim đối kháng với nhãn suy tay từ `business_rules.md` (`bonus/cases.jsonl`, `bonus/world.json`), script tổng hợp `bonus/b3_summary.py`, 6 hàm test (23 trường hợp) và `report/team/bonus_report.md`.
 
 ### Bằng chứng
 
-- Commit workflow và test `1e87425` (PR #1); `PHAN_VIEC.md` `56a5cf1`; ADR, research card, bảng đóng góp, `hidden_selfcheck.json` `6136e5b`; báo cáo cá nhân `d157a3e`.
+- Commit workflow và test `1e87425` (PR #1); bản nháp phân việc `56a5cf1`; ADR, research card, bảng đóng góp, `hidden_selfcheck.json` `6136e5b`; báo cáo cá nhân `d157a3e`.
 - Ma trận student của workflow đạt 62 passed; `tests/test_workflow_extra.py` đạt 20 passed. Trên code tích hợp `12936a8`: cổng host 108 passed, ma trận student 248 passed, `crash_safety 20/20`.
 - Benchmark (`src/reports/benchmark.json`): workflow pass 1.000, pass^5 1.000, variance 0, cost/success 28.77 VND, thấp nhất trong 4 shape. Run ID dẫn chứng `R-workflow-C-001-s11`; `R-workflow-C-002-s55` trả `denied` trong khi `R-swarm-C-002-s55` trả sai `resolved`.
 - `python -m lab8.check_submission` đạt 0 FAIL.
+- Bonus B3 (commit `dc20097`): `tests/test_bonus_swarm_verified.py` đạt 23 passed; cổng host 131 passed. `src/reports/bonus_b3.json`: swarm_verified pass 1.000, pass^5 1.000, variance 0 trên public và bộ đối kháng (swarm 0.873 / 0.364), 0 trả sai, 0 leak, cost/success 57.57 / 65.54 VND; hidden self-check khớp workflow 200/200. Trace minh họa `R-swarm_verified-C-002-s55`. Báo cáo: [bonus_report.md](report/team/bonus_report.md).
 - Báo cáo cá nhân của tôi nằm tại [2A202603987_KhuongHoangNguyen.md](report/team/2A202603987_KhuongHoangNguyen.md).
 
 ## 2A202603991_PhamLyNgocDuc
@@ -91,7 +93,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Shape C — Orchestrator + Handoff (Người 3 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai trong `src/lab8/shapes/orchestrator.py` và bổ sung test tại `src/tests/test_orchestrator_handoff.py`.
+- Tôi phụ trách Shape C — Orchestrator + Handoff (Người 3 theo phân việc nhóm), triển khai trong `src/lab8/shapes/orchestrator.py` và bổ sung test tại `src/tests/test_orchestrator_handoff.py`.
 
 ### Đóng góp cụ thể
 
@@ -111,7 +113,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Ledger / Crash / Security (Người 4 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai kiểm thử an toàn tại `src/tests/test_safety_extra.py` và thực thi crash suite `src/reports/crash.json`.
+- Tôi phụ trách Ledger / Crash / Security (Người 4 theo phân việc nhóm), triển khai kiểm thử an toàn tại `src/tests/test_safety_extra.py` và thực thi crash suite `src/reports/crash.json`.
 
 ### Đóng góp cụ thể
 
