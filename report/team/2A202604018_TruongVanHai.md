@@ -9,7 +9,7 @@
 
 ## 2. Phần việc phụ trách
 
-- Phụ trách vai trò **Ledger / Crash / Security + Báo cáo / Benchmark / ADR** (Người 4 theo [PHAN_VIEC.md](../../PHAN_VIEC.md)).
+- Phụ trách vai trò **Ledger / Crash / Security + Báo cáo / Benchmark / ADR** (Người 4 theo phân việc nhóm).
 - Phụ trách thực thi kiểm thử an toàn va chạm và khôi phục trạng thái (Crash safety suite CP4), đảm bảo `crash_safety = 20/20` tại `src/reports/crash.json`.
 - Viết bộ kiểm thử chuyên biệt về an toàn, ràng buộc phê duyệt và bảo mật dữ liệu tại `src/tests/test_safety_extra.py` chạy trên toàn bộ 3 shapes (workflow, single, orchestrator).
 - Rà soát toàn bộ các tệp trace (`src/traces/`) và log xuất ra để đảm bảo tuyệt đối không rò rỉ `CANARY_SECRET_*`, `parent_secret`, token `Authorization` hay PII của người dùng.
@@ -60,4 +60,4 @@
 
 ## 6. Tự đánh giá
 
-- Đã hoàn thành 100% nhiệm vụ của Người 4 theo phân công trong [PHAN_VIEC.md](../../PHAN_VIEC.md): tạo báo cáo `crash.json` 20/20, viết và kiểm chứng thành công bộ test an toàn `test_safety_extra.py`, quét sạch trace secret, thực thi benchmark và hoàn thiện toàn bộ hệ thống tài liệu báo cáo `decision_adr.md`, `research_card.md`, `group_report.md`.
+- Đã hoàn thành 100% nhiệm vụ của Người 4 theo phân công của nhóm: tạo báo cáo `crash.json` 20/20, viết và kiểm chứng thành công bộ test an toàn `test_safety_extra.py`, quét sạch trace secret, thực thi benchmark và hoàn thiện toàn bộ hệ thống tài liệu báo cáo `decision_adr.md`, `research_card.md`, `group_report.md`.

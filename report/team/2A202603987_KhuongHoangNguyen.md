@@ -9,7 +9,7 @@
 
 ## 2. Phần việc phụ trách
 
-Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
+Người 1 trong phân việc của nhóm:
 
 - **Shape A — `workflow`** (`src/lab8/shapes/workflow.py`): các bước Python cố định, tiền do code tính, host là nơi duy nhất ghi ledger.
 - **Integration:** chia việc cho 4 người, merge nhánh vào `main`, giữ cổng host xanh sau mỗi lần merge.
@@ -22,7 +22,7 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 **CP1 — cài đặt và chia việc**
 
 - Cài môi trường trên Windows (Python 3.13), xác nhận smoke pass, cổng host xanh, ma trận student `186 failed, 62 passed` đúng như CHECKPOINTS.
-- Điền thông tin nhóm trong `TEAM.md`; viết `PHAN_VIEC.md` (commit `56a5cf1`): nhánh, file, test và mốc giờ cho từng người. Cơ sở để chạy song song: mỗi shape là một file riêng, test tách theo shape, crash suite chỉ gọi host nên người 4 làm được ngay từ đầu.
+- Điền thông tin nhóm trong `TEAM.md`; viết bản nháp phân việc `PHAN_VIEC.md` (commit `56a5cf1`; file nháp đã xóa sau khi hoàn thành): nhánh, file, test và mốc giờ cho từng người. Cơ sở để chạy song song: mỗi shape là một file riêng, test tách theo shape, crash suite chỉ gọi host nên người 4 làm được ngay từ đầu.
 
 **CP2 + CP3 — shape workflow** (commit `1e87425`, PR #1)
 
@@ -96,7 +96,7 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 
 - Commit:
   - `1e87425`: workflow và test
-  - `56a5cf1`: `PHAN_VIEC.md`
+  - `56a5cf1`: bản nháp phân việc `PHAN_VIEC.md` (đã xóa ở `c2ddf77`, xem lại bằng `git show 56a5cf1:PHAN_VIEC.md`)
   - `6136e5b`: ADR, research card, bảng đóng góp, `hidden_selfcheck.json`
   - `61f8c84`: rà research card, `group_report.md`, cập nhật báo cáo này và `TEAM.md`
   - `dc20097`: bonus B3 (`src/bonus/`, test, `reports/bonus_*.json`, `bonus_report.md`)

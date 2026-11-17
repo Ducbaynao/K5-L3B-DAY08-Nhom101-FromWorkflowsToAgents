@@ -48,11 +48,11 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Shape A — Workflow (`src/lab8/shapes/workflow.py`, test tại `src/tests/test_workflow_extra.py`) và integration (Người 1 theo [PHAN_VIEC.md](PHAN_VIEC.md)): chia việc, merge nhánh vào `main`, giữ cổng host xanh, chạy benchmark CP5, hoàn thiện ADR, research card và group report; làm bonus B3 (verifier/aggregator) cho cả nhóm.
+- Tôi phụ trách Shape A — Workflow (`src/lab8/shapes/workflow.py`, test tại `src/tests/test_workflow_extra.py`) và integration (Người 1 theo phân việc nhóm): chia việc, merge nhánh vào `main`, giữ cổng host xanh, chạy benchmark CP5, hoàn thiện ADR, research card và group report; làm bonus B3 (verifier/aggregator) cho cả nhóm.
 
 ### Đóng góp cụ thể
 
-- Tôi viết `PHAN_VIEC.md` chia việc song song cho 4 người: mỗi shape một file và một nhánh riêng, crash suite làm độc lập, benchmark là điểm gom ở CP5.
+- Tôi viết bản nháp phân việc (`PHAN_VIEC.md`, đã xóa sau khi hoàn thành) chia việc song song cho 4 người: mỗi shape một file và một nhánh riêng, crash suite làm độc lập, benchmark là điểm gom ở CP5.
 - Tôi triển khai workflow với 7 bước cố định: `get_claim_view` → `needs_info` → `lookup_order` (`escalated`) → `compute_compensation` → `denied` khi quote 0 → `durability.issue_refund` với quote đầy đủ và `crash_at` → `resolved` / `denied` / `failed`. Ticket không được parse hay ghi vào trace; MockLLM chỉ soạn câu trả lời. Tôi thêm 3 hàm test với 20 trường hợp: T02 bị từ chối trên cả 5 seed, trace của 14 claim không lộ secret hay chữ ticket, claim không tồn tại vẫn có trace.
 - Sau mỗi lần merge, tôi chạy lại cổng host và ma trận student, quét trace của single và orchestrator (mỗi shape 70 lần chạy) tìm secret/PII. Tôi phát hiện nhánh tích hợp lệch `main` khiến benchmark lần đầu ra `single 0.000`, bỏ kết quả đó và chạy lại trên code đã merge đủ.
 - Tôi chạy crash suite và benchmark 4 shape × 5 seed; điền lại ADR và research card sau khi commit `78eae11` đưa chúng về mẫu trống (sửa tên event trace, commit hash, URL paper MAST); đối chiếu hidden self-check của người 2; viết `group_report.md`.
@@ -60,7 +60,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Bằng chứng
 
-- Commit workflow và test `1e87425` (PR #1); `PHAN_VIEC.md` `56a5cf1`; ADR, research card, bảng đóng góp, `hidden_selfcheck.json` `6136e5b`; báo cáo cá nhân `d157a3e`.
+- Commit workflow và test `1e87425` (PR #1); bản nháp phân việc `56a5cf1`; ADR, research card, bảng đóng góp, `hidden_selfcheck.json` `6136e5b`; báo cáo cá nhân `d157a3e`.
 - Ma trận student của workflow đạt 62 passed; `tests/test_workflow_extra.py` đạt 20 passed. Trên code tích hợp `12936a8`: cổng host 108 passed, ma trận student 248 passed, `crash_safety 20/20`.
 - Benchmark (`src/reports/benchmark.json`): workflow pass 1.000, pass^5 1.000, variance 0, cost/success 28.77 VND, thấp nhất trong 4 shape. Run ID dẫn chứng `R-workflow-C-001-s11`; `R-workflow-C-002-s55` trả `denied` trong khi `R-swarm-C-002-s55` trả sai `resolved`.
 - `python -m lab8.check_submission` đạt 0 FAIL.
@@ -93,7 +93,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Shape C — Orchestrator + Handoff (Người 3 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai trong `src/lab8/shapes/orchestrator.py` và bổ sung test tại `src/tests/test_orchestrator_handoff.py`.
+- Tôi phụ trách Shape C — Orchestrator + Handoff (Người 3 theo phân việc nhóm), triển khai trong `src/lab8/shapes/orchestrator.py` và bổ sung test tại `src/tests/test_orchestrator_handoff.py`.
 
 ### Đóng góp cụ thể
 
@@ -113,7 +113,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Tôi phụ trách Ledger / Crash / Security (Người 4 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai kiểm thử an toàn tại `src/tests/test_safety_extra.py` và thực thi crash suite `src/reports/crash.json`.
+- Tôi phụ trách Ledger / Crash / Security (Người 4 theo phân việc nhóm), triển khai kiểm thử an toàn tại `src/tests/test_safety_extra.py` và thực thi crash suite `src/reports/crash.json`.
 
 ### Đóng góp cụ thể
 
