@@ -15,6 +15,7 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 - **Integration:** chia việc cho 4 người, merge nhánh vào `main`, giữ cổng host xanh sau mỗi lần merge.
 - **CP5:** chạy crash suite, benchmark 4 shape × 5 seed, tự kiểm trên `student_drop/`, đưa `check_submission` về `0 FAIL, 0 WARN` (điền ADR, research card, bảng đóng góp).
 - **Rà soát và báo cáo nhóm:** đối chiếu kết quả hidden self-check của người 2, rà và sửa `research_card.md`, viết `group_report.md`.
+- **Bonus B3 — verifier/aggregator** (cho cả nhóm): `src/bonus/`, `src/tests/test_bonus_swarm_verified.py`, `report/team/bonus_report.md`.
 
 ## 3. Đóng góp cụ thể
 
@@ -69,14 +70,37 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
   - 5 khó khăn kèm bằng chứng.
   - Hạn chế: `decide` của single là luật Python cố định nên benchmark đo chi phí vòng ReAct chứ chưa đo rủi ro; 3 shape cùng dùng `compute_compensation` nên khớp 600/600 không phải kiểm chứng độc lập.
 
+**Bonus B3 — swarm + verifier bằng code** (commit `dc20097`)
+
+- **Chọn topic:** chọn B3 vì nối thẳng vào ADR (vì sao chọn workflow thay vì swarm) và chạy được qua `--extra-shape`, nên grader chấm được trên hidden.
+- **`src/bonus/swarm_verified.py`:** giữ nguyên luồng swarm, kể cả điểm yếu ở seed chia hết cho 5. Thêm `verify_facts` ngay sau bước quote:
+  - đọc lại order qua `lookup_order`;
+  - đối chiếu `delay_days`, `status`, `damage_verified` với dữ kiện đã dùng để quote;
+  - nếu lệch thì quote lại bằng `compute_compensation` (tối đa 1 vòng) và ghi `verifier_override`.
+- **Đặt verifier trước nhánh `proposal <= 0`**, không chỉ trước lệnh ghi. Lý do: để sửa được cả trường hợp swarm từ chối sai khi ticket nói thiếu số ngày trễ (B-002, B-008).
+- **11 claim đối kháng** (`bonus/cases.jsonl`, `bonus/world.json`): nói quá, nói thiếu, nói dối hỏng hàng, nhiều con số, injection, ngay dưới ngưỡng, đơn hủy, approval thấp hơn quote, approval hết hạn.
+  - Nhãn suy tay từ `business_rules.md`, mỗi claim có `label_note`; không sinh nhãn bằng `compensation.quote`.
+  - Trước khi tin nhãn, tôi dự đoán tay 7 trial swarm sẽ fail ở seed 55. Lần chạy thử ra đúng 7 trial đó, và workflow đạt 55/55.
+- **`bonus/b3_summary.py`:** đếm số lần verifier can thiệp và safety counts (trả sai, từ chối sai, bypass, leak), so quyết định với workflow trên hidden, ghi ra `reports/bonus_b3.json`.
+  - Khi chạy trên Windows, script lỗi `UnicodeEncodeError`; tôi sửa bằng `utf8_stdio()` giống các tool của lab.
+- **Test:** 6 hàm test, 23 trường hợp:
+  - override ở C-002 seed 55;
+  - không can thiệp ở seed khác;
+  - `verify_facts` bắt cả `status` và `damage_verified` (benchmark chỉ kích hoạt nhánh `delay_days`);
+  - nhãn đúng cho workflow và swarm_verified;
+  - crash/resume giữ một refund;
+  - trace không lộ secret hay PII.
+- **`report/team/bonus_report.md`:** kết luận ủng hộ hypothesis trong phạm vi lab. Verifier đưa swarm về mức của workflow, nhưng khi verifier luôn thắng thì swarm thành một workflow đắt gấp ≈ 2×. Nêu rõ điều kiện làm kết luận đảo ngược và các giới hạn (MockLLM, chỉ nhánh `delay_days` được benchmark kích hoạt, hidden không nhãn).
+
 ## 4. Bằng chứng
 
 - Commit:
   - `1e87425`: workflow và test
   - `56a5cf1`: `PHAN_VIEC.md`
   - `6136e5b`: ADR, research card, bảng đóng góp, `hidden_selfcheck.json`
-  - Commit sau `6136e5b`: rà research card, `group_report.md`, cập nhật báo cáo này và `TEAM.md`
-- File: `src/lab8/shapes/workflow.py`, `src/tests/test_workflow_extra.py`, `report/team/decision_adr.md`, `report/team/research_card.md`, `report/team/group_report.md`.
+  - `61f8c84`: rà research card, `group_report.md`, cập nhật báo cáo này và `TEAM.md`
+  - `dc20097`: bonus B3 (`src/bonus/`, test, `reports/bonus_*.json`, `bonus_report.md`)
+- File: `src/lab8/shapes/workflow.py`, `src/tests/test_workflow_extra.py`, `report/team/decision_adr.md`, `report/team/research_card.md`, `report/team/group_report.md`, `src/bonus/swarm_verified.py`, `src/tests/test_bonus_swarm_verified.py`, `report/team/bonus_report.md`.
 - Kết quả chạy trong `src/` trên code cuối (`12936a8`):
 
   | Lệnh | Kết quả |
@@ -93,16 +117,30 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
   - `R-workflow-C-014-s11`: `resolved`, `proposal_amount` 150.000, ledger 120.000 (host trừ 30.000 đã hoàn).
   - `R-workflow-C-002-s55`: `denied`, trong khi `R-swarm-C-002-s55` trả sai `resolved`.
 
+- Bonus B3 (`src/reports/bonus_b3.json`, sinh bởi `lab8.benchmark --extra-shape` và `python -m bonus.b3_summary`):
+
+  | Bộ | swarm | swarm_verified | workflow |
+  | --- | --- | --- | --- |
+  | Public 14 × 5: pass / pass^5 / cost/success | 0.986 / 0.929 / 49.57 | 1.000 / 1.000 / 57.57 | 1.000 / 1.000 / 28.77 |
+  | Đối kháng 11 × 5: pass / pass^5 / cost/success | 0.873 / 0.364 / 61.76 | 1.000 / 1.000 / 65.54 | 1.000 / 1.000 / 30.91 |
+  | Trả sai / từ chối sai (đối kháng) | 4 / 2 | 0 / 0 | 0 / 0 |
+  | Hidden self-check: khác quyết định workflow | 6/200 | 0/200 | — |
+
+  - Verifier can thiệp 9 lần trên bộ đối kháng (7 lần đổi số tiền) và 1 lần trên public, tất cả ở seed 55. Cả 3 shape đều 0 leak.
+  - Trace minh họa: `R-swarm_verified-C-002-s55`, verifier đổi số ngày trễ 5 → 2 theo order, quote 20.000 → 0, kết quả `denied`.
+  - Cổng host sau khi thêm bonus: `131 passed`; ma trận student vẫn 248/248.
+
 ## 5. Công cụ AI đã dùng
 
 - **Công cụ:** Claude Code (Claude Opus 5.5) trong VS Code.
-- **Dùng vào việc gì:** đọc đề và contract, đề xuất cách chia việc, viết `workflow.py` và `test_workflow_extra.py`, chạy test, benchmark và các lệnh git, quét trace, soạn ADR, research card, group report và báo cáo này; đọc `hidden_selfcheck.json` để đối chiếu với báo cáo của người 2.
+- **Dùng vào việc gì:** đọc đề và contract, đề xuất cách chia việc, viết `workflow.py` và `test_workflow_extra.py`, chạy test, benchmark và các lệnh git, quét trace, soạn ADR, research card, group report và báo cáo này; đọc `hidden_selfcheck.json` để đối chiếu với báo cáo của người 2; làm bonus B3 (viết `swarm_verified.py`, script tổng hợp, test, soạn `bonus_report.md`).
 - **Cách tự kiểm tra:**
   - Đối chiếu từng nhánh của `workflow.py` với bảng trong `docs/business_rules.md` và `docs/contracts.md`.
   - Xác nhận bằng test thật, không dựa vào lời AI: ma trận student 62/62, cổng host, crash 20/20.
   - Số liệu trong ADR và research card lấy từ `src/reports/benchmark.json`, kiểm tra run id có trong file và commit hash có trên `main`.
   - Khi benchmark lần đầu ra `single = 0.000`, kiểm lại nhánh thay vì dùng số đó.
   - URL paper MAST được kiểm lại vì bản cũ ghi sai.
+  - Bonus: nhãn 11 claim đối kháng tự suy theo `business_rules.md`, không sinh bằng `compensation.quote`. Kiểm chéo bằng workflow (55/55) và bằng dự đoán tay 7 trial swarm fail trước khi chạy. Số liệu trong `bonus_report.md` lấy từ `reports/bonus_b3.json`; một chỗ làm tròn sai (16,1% → 16,2%) đã sửa sau khi kiểm lại.
 
 ## 6. Tự đánh giá
 
