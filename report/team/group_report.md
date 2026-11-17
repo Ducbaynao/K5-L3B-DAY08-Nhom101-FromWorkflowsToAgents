@@ -8,7 +8,7 @@ Tối đa 5 trang ngoài phụ lục. Số liệu lấy từ file trong `src/rep
 - Lớp: L3B
 - Repo: `K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents`
 - Nhánh nộp: `feat/safety-tests` (sẵn sàng merge `main`)
-- Commit chốt: 5e383b3 (tham chiếu cùng `report/team/decision_adr.md`)
+- Commit chốt: 008b465 (tham chiếu cùng `report/team/decision_adr.md`)
 - Thành viên:
   1. Nguyễn Khương — Shape A `workflow` + Integration
   2. Phạm Lý Ngọc Đức (2A202603991) — Shape B `single` (ReAct agent)

@@ -5,7 +5,7 @@
 - Tên nhóm: Nhom101
 - Lớp: L3B
 - Repo nhóm: `K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents, nhánh `main`, commit chốt: 5e383b3
+- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents, nhánh `main`, commit chốt: 008b465
 
 ## Thành viên
 
@@ -30,7 +30,7 @@ Gợi ý chia vai:
 | Nguyễn Khương | Shape A — Workflow; triển khai run_claim pipeline xác định và cổng host | 1e87425 | src/tests/test_workflow_extra.py — test_ticket_delay_is_ignored_on_every_seed, test_trace_has_no_secret_or_ticket_text, test_unknown_claim_fails_cleanly_with_trace (7 trường hợp) |
 | Phạm Lý Ngọc Đức | Shape B — Single Agent; triển khai run_claim, ReAct, tích hợp host và test cá nhân | 3943c48 | src/tests/test_single_extra.py — test_single_early_exit, test_single_react_reads_order_and_counts_calls, test_single_react_escalates_invisible_order, test_single_step_cap_returns_failed_without_refund, test_single_crash_resumes_with_one_refund, test_single_retry_changed_quote_preserves_committed_refund (12 trường hợp) |
 | Cao Thanh Tùng | Shape C — Orchestrator + Handoff; triển khai run_claim, make_handoff, READONLY_TOOLS | c58c4c4 | src/tests/test_orchestrator_handoff.py — test_orchestrator_trace_contract_and_no_secret_leak, test_orchestrator_passes_full_quote_for_per_order_cap, test_orchestrator_crash_and_resume_idempotent, test_handoff_rejects_write_tools_and_strips_extra_facts (4 trường hợp) |
-| Trương Văn Hải | Ledger/crash/security + benchmark/ADR/report; thực thi crash suite 20/20, quét trace, benchmark, hoàn thiện ADR & research card | 5e383b3 | src/tests/test_safety_extra.py — test_approval_expired_denied_on_all_shapes, test_approval_claim_mismatch_denied_on_all_shapes, test_revoked_approval_denied_on_all_shapes, test_order_already_refunded_denied_on_all_shapes, test_t14_top_up_difference_on_all_shapes, test_no_secret_or_pii_leak_in_trace_on_all_shapes (18 trường hợp) |
+| Trương Văn Hải | Ledger/crash/security + benchmark/ADR/report; thực thi crash suite 20/20, quét trace, benchmark, hoàn thiện ADR & research card | 008b465 | src/tests/test_safety_extra.py — test_approval_expired_denied_on_all_shapes, test_approval_claim_mismatch_denied_on_all_shapes, test_revoked_approval_denied_on_all_shapes, test_order_already_refunded_denied_on_all_shapes, test_t14_top_up_difference_on_all_shapes, test_no_secret_or_pii_leak_in_trace_on_all_shapes (18 trường hợp) |
 
 ## Cá nhân
 
