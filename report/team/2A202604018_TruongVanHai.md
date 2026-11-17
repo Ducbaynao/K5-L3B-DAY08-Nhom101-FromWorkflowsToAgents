@@ -45,7 +45,7 @@
   - `python -m pytest -q` (cổng host) → `108 passed, 248 deselected`
   - `python -m lab8.crash_test --count 20 --out reports/crash.json` → `crash_safety 20/20`
   - `python -m lab8.benchmark ...` → `workflow` (pass 1.000, cost 28.77 VND), `single` (pass 1.000, cost 31.56 VND), `orchestrator` (pass 1.000, cost 56.65 VND), `swarm` (pass 0.986, cost 49.57 VND, fail C-002 seed 55).
-- Commit hash: `008b465` (và các commit trên nhánh `feat/safety-tests`).
+- Commit hash: `78eae11` trên nhánh `feat/safety-tests`.
 
 ## 5. Công cụ AI đã dùng
 
