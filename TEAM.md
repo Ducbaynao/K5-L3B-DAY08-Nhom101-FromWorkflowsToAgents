@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Khương Hoàng Nguyên   | 2A202603987    | 26ai.nguyenkh@vinuni.edu.vn   | NguyenGL03       | Shape A `workflow` + integration (merge, cổng host, `check_submission`) |
+|   1 | Khương Hoàng Nguyên   | 2A202603987    | 26ai.nguyenkh@vinuni.edu.vn   | NguyenGL03       | Shape A `workflow` + integration (merge, cổng host, benchmark, `check_submission`); ADR, research card, group report |
 |   2 | Phạm Lý Ngọc Đức       |   2A202603991   |   26ai.ducpln@vinuni.edu.vn    |    Ducbaynao    | Shape B `single` (vòng ReAct ≤ 8 bước) |
 |   3 | Cao Thanh Tùng | 2A202603982 | 26ai.tungct@vinuni.edu.vn | TungCTT | Shape C `orchestrator` + handoff/allowlist |
 |   4 | Trương Văn Hải         |   2A202604018   |   truongvanhai868@gmail.com    |    haihai       | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
@@ -27,7 +27,7 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| Khương Hoàng Nguyên | Shape A — Workflow + integration (merge, cổng host, benchmark, `check_submission`) | 1e87425 | src/tests/test_workflow_extra.py — test_ticket_delay_is_ignored_on_every_seed, test_trace_has_no_secret_or_ticket_text, test_unknown_claim_fails_cleanly_with_trace (20 trường hợp) |
+| Khương Hoàng Nguyên | Shape A — Workflow + integration (merge, cổng host, benchmark, `check_submission`); rà hidden self-check, research card; viết ADR và group report | 1e87425 | src/tests/test_workflow_extra.py — test_ticket_delay_is_ignored_on_every_seed, test_trace_has_no_secret_or_ticket_text, test_unknown_claim_fails_cleanly_with_trace (20 trường hợp) |
 | Phạm Lý Ngọc Đức | Shape B — Single Agent; triển khai run_claim, ReAct, tích hợp host và test cá nhân | 3943c48 | src/tests/test_single_extra.py — test_single_early_exit; test_single_react_reads_order_and_counts_calls; test_single_react_escalates_invisible_order; test_single_step_cap_returns_failed_without_refund; test_single_crash_resumes_with_one_refund; test_single_retry_changed_quote_preserves_committed_refund (12 trường hợp) |
 | Cao Thanh Tùng | Shape C — Orchestrator + handoff/allowlist | c58c4c4 | src/tests/test_orchestrator_handoff.py — test_orchestrator_trace_contract_and_no_secret_leak, test_orchestrator_passes_full_quote_for_per_order_cap, test_orchestrator_crash_and_resume_idempotent, test_handoff_rejects_write_tools_and_drops_extra_facts |
 | Trương Văn Hải | Ledger/crash/security + benchmark/ADR/report; thực thi crash suite 20/20, rà trace bảo mật, viết test an toàn | 78eae11 | src/tests/test_safety_extra.py — test_approval_expired_denied_on_all_shapes, test_approval_claim_mismatch_denied_on_all_shapes, test_revoked_approval_denied_on_all_shapes, test_order_already_refunded_denied_on_all_shapes, test_t14_top_up_difference_on_all_shapes, test_no_secret_or_pii_leak_in_trace_on_all_shapes (18 trường hợp) |
@@ -43,6 +43,27 @@ report/team/MSSV_HoTen.md
 Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 
 Sao chép mục dưới đây cho từng thành viên.
+
+## 2A202603987_KhuongHoangNguyen
+
+### Phần việc phụ trách
+
+- Tôi phụ trách Shape A — Workflow (`src/lab8/shapes/workflow.py`, test tại `src/tests/test_workflow_extra.py`) và integration (Người 1 theo [PHAN_VIEC.md](PHAN_VIEC.md)): chia việc, merge nhánh vào `main`, giữ cổng host xanh, chạy benchmark CP5, hoàn thiện ADR, research card và group report.
+
+### Đóng góp cụ thể
+
+- Tôi viết `PHAN_VIEC.md` chia việc song song cho 4 người: mỗi shape một file và một nhánh riêng, crash suite làm độc lập, benchmark là điểm gom ở CP5.
+- Tôi triển khai workflow với 7 bước cố định: `get_claim_view` → `needs_info` → `lookup_order` (`escalated`) → `compute_compensation` → `denied` khi quote 0 → `durability.issue_refund` với quote đầy đủ và `crash_at` → `resolved` / `denied` / `failed`. Ticket không được parse hay ghi vào trace; MockLLM chỉ soạn câu trả lời. Tôi thêm 3 hàm test với 20 trường hợp: T02 bị từ chối trên cả 5 seed, trace của 14 claim không lộ secret hay chữ ticket, claim không tồn tại vẫn có trace.
+- Sau mỗi lần merge, tôi chạy lại cổng host và ma trận student, quét trace của single và orchestrator (mỗi shape 70 lần chạy) tìm secret/PII. Tôi phát hiện nhánh tích hợp lệch `main` khiến benchmark lần đầu ra `single 0.000`, bỏ kết quả đó và chạy lại trên code đã merge đủ.
+- Tôi chạy crash suite và benchmark 4 shape × 5 seed; điền lại ADR và research card sau khi commit `78eae11` đưa chúng về mẫu trống (sửa tên event trace, commit hash, URL paper MAST); đối chiếu hidden self-check của người 2; viết `group_report.md`.
+
+### Bằng chứng
+
+- Commit workflow và test `1e87425` (PR #1); `PHAN_VIEC.md` `56a5cf1`; ADR, research card, bảng đóng góp, `hidden_selfcheck.json` `6136e5b`; báo cáo cá nhân `d157a3e`.
+- Ma trận student của workflow đạt 62 passed; `tests/test_workflow_extra.py` đạt 20 passed. Trên code tích hợp `12936a8`: cổng host 108 passed, ma trận student 248 passed, `crash_safety 20/20`.
+- Benchmark (`src/reports/benchmark.json`): workflow pass 1.000, pass^5 1.000, variance 0, cost/success 28.77 VND, thấp nhất trong 4 shape. Run ID dẫn chứng `R-workflow-C-001-s11`; `R-workflow-C-002-s55` trả `denied` trong khi `R-swarm-C-002-s55` trả sai `resolved`.
+- `python -m lab8.check_submission` đạt 0 FAIL.
+- Báo cáo cá nhân của tôi nằm tại [2A202603987_KhuongHoangNguyen.md](report/team/2A202603987_KhuongHoangNguyen.md).
 
 ## 2A202603991_PhamLyNgocDuc
 
@@ -65,6 +86,26 @@ Sao chép mục dưới đây cho từng thành viên.
 - Phần đóng góp của tôi thuộc commit 3943c48 và đã tích hợp vào main qua PR #2, merge commit fe41178. [PR #2](https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents/pull/2)
 - Báo cáo cá nhân của tôi nằm tại [2A202603991_PhamLyNgocDuc.md](report/team/2A202603991_PhamLyNgocDuc.md).
 - Báo cáo cá nhân của tôi nằm tại [2A202603991_PhamLyNgocDuc.md](report/team/2A202603991_PhamLyNgocDuc.md). Tôi sẽ bổ sung commit hash sau khi commit phần đóng góp.
+
+## 2A202603982_CaoThanhTung
+
+### Phần việc phụ trách
+
+- Tôi phụ trách Shape C — Orchestrator + Handoff (Người 3 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai trong `src/lab8/shapes/orchestrator.py` và bổ sung test tại `src/tests/test_orchestrator_handoff.py`.
+
+### Đóng góp cụ thể
+
+- Tôi đọc claim qua `get_claim_view` (không dùng `SELECT *`) và xử lý đủ các nhánh: `unknown_claim` (`failed`), thiếu `order_id` (`needs_info`), đơn không visible hoặc sai principal (`escalated`), quote bằng 0 (`denied`, không ghi ledger), quote dương thì gọi `durability.issue_refund` với quote đầy đủ để host kiểm approval và trừ phần đã hoàn (T13, T14).
+- Tôi dựng handoff bằng `make_handoff` với `facts={}` và chỉ cấp tool đọc (`lookup_order`, `lookup_policy`, `lookup_refund_history`, `compute_compensation`) cho `run_readonly_investigators`. Trace ghi handoff đã sanitize qua `safe_dump`, không ghi parent context.
+- Tôi truyền `crash_at` vào `issue_refund`; khi gặp `InjectedCrash` thì ghi event `crash`, flush trace và ném lại, không nuốt exception.
+- Tôi thêm 4 test: trace contract v1 và không rò rỉ secret, T14 truyền quote đầy đủ, crash/resume giữ một refund, `make_handoff` từ chối tool ghi và lọc fact thừa.
+
+### Bằng chứng
+
+- Tôi ghi nhận `python -m pytest -q tests/test_orchestrator_handoff.py` đạt 4 passed; cổng host lúc đó đạt 58 passed, 248 deselected; ma trận student của orchestrator đạt 62 passed.
+- Benchmark (`src/reports/benchmark.json`): orchestrator pass 1.000, pass^5 1.000, variance 0, cost/success 56.65 VND (5.57 tool call/trial vì investigator đọc thêm policy và lịch sử hoàn tiền). Hidden self-check: 200 trial, 0 error, 0 leak_suspect.
+- Phần đóng góp của tôi thuộc commit c58c4c4 và đã tích hợp vào `main`. [Commit c58c4c4](https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents/commit/c58c4c4a79f98c4c7a8e0c06bfd74b2ffb15455a)
+- Báo cáo cá nhân của tôi nằm tại [2A202603982_CaoThanhTung.md](report/team/2A202603982_CaoThanhTung.md).
 
 ## 2A202604018_TruongVanHai
 
