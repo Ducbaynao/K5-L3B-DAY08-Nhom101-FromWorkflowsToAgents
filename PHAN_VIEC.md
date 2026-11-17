@@ -29,9 +29,9 @@ Người 1 viết workflow trước (~15 phút) để làm mẫu; người 2, 3 
 - **File sửa:** `src/lab8/shapes/workflow.py`
 - **Test thêm:** `src/tests/test_workflow_extra.py` (ví dụ: ticket ghi "trễ 9 ngày" nhưng order trễ 2 ngày → `denied`)
 - **Việc:**
-  - [ ] CP2: viết workflow theo docstring, các bước Python cố định. MockLLM chỉ dùng để soạn reply (nếu có).
-  - [ ] CP3: truyền `crash_at`, để `InjectedCrash` bay ra.
-  - [ ] Integration: review và merge PR của người 2, 3, 4 vào `main`; sau mỗi lần merge chạy lại cổng host.
+  - [v] CP2: viết workflow theo docstring, các bước Python cố định. MockLLM chỉ dùng để soạn reply (nếu có).
+  - [v] CP3: truyền `crash_at`, để `InjectedCrash` bay ra.
+  - [v] Integration: review và merge PR của người 2, 3, 4 vào `main`; sau mỗi lần merge chạy lại cổng host.
   - [ ] CP5: chạy benchmark 4 shape và `check_submission`.
 - **Tự kiểm:** `python -m pytest -q -m student -o addopts= -k workflow` → 62 passed.
 
