@@ -14,6 +14,7 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 - **Shape A — `workflow`** (`src/lab8/shapes/workflow.py`): các bước Python cố định, tiền do code tính, host là nơi duy nhất ghi ledger.
 - **Integration:** chia việc cho 4 người, merge nhánh vào `main`, giữ cổng host xanh sau mỗi lần merge.
 - **CP5:** chạy crash suite, benchmark 4 shape × 5 seed, tự kiểm trên `student_drop/`, đưa `check_submission` về `0 FAIL, 0 WARN` (điền ADR, research card, bảng đóng góp).
+- **Rà soát và báo cáo nhóm:** đối chiếu kết quả hidden self-check của người 2, rà và sửa `research_card.md`, viết `group_report.md`.
 
 ## 3. Đóng góp cụ thể
 
@@ -50,13 +51,32 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 - Phát hiện commit `78eae11` đã đưa ADR, research card và group report về mẫu trống. Điền lại ADR và research card, sửa các chỗ sai của bản cũ: tên event trong trace không khớp code, commit hash không trỏ đúng code được chấm, URL paper MAST sai (`2503.11234` → `2503.13657`), câu khẳng định quét trace không có bằng chứng.
 - Bổ sung bảng đóng góp đủ 4 người.
 
+**Rà soát cuối và báo cáo nhóm**
+
+- **Đối chiếu hidden self-check của người 2** (báo cáo của Phạm Lý Ngọc Đức): đọc lại `src/reports/hidden_selfcheck.json` và xác nhận số liệu khớp với báo cáo của Đức.
+  - 600 trial, 40 claim `C-H01`…`C-H40`, 5 seed; mỗi shape 0 `error`, 0 `leak_suspect`, 90 resolved / 95 denied / 10 escalated / 5 needs_info.
+  - Run id `R-single-C-H01-s11` có trong file.
+  - Kiểm thêm: ba shape cho cùng status ở cả 600 cặp (claim, seed), và không claim nào đổi status giữa các seed.
+  - Ghi chú: Đức chạy với đường dẫn `../instructor/student_drop/`, nhóm để `student_drop/` ở gốc repo. Hai lần chạy ra cùng con số.
+- **Rà `research_card.md`:** giữ R2 (MAST).
+  - Thêm confounder vào METHOD: "shape" gói chung topology, số model call và `REFERENCE_WEAKNESS` chỉ bật ở seed chia hết cho 5.
+  - Gán lỗi của swarm vào failure mode cụ thể của MAST: "No or incomplete verification", và nêu cách xếp khác là "Disobey task specification".
+  - Thêm nhận xét: lỗi chỉ lộ ở 1/5 seed, nên cần đo pass^5 và variance.
+- **Viết `group_report.md`:**
+  - Cách chia việc song song và thứ tự merge.
+  - Bảng so sánh 3 shape (ai chọn bước, ai tính tiền, ai ghi tiền), trace event từng shape.
+  - Bảng benchmark đủ cột (gồm p95 steps), crash 20/20, hidden self-check.
+  - 5 khó khăn kèm bằng chứng.
+  - Hạn chế: `decide` của single là luật Python cố định nên benchmark đo chi phí vòng ReAct chứ chưa đo rủi ro; 3 shape cùng dùng `compute_compensation` nên khớp 600/600 không phải kiểm chứng độc lập.
+
 ## 4. Bằng chứng
 
 - Commit:
   - `1e87425`: workflow và test
   - `56a5cf1`: `PHAN_VIEC.md`
   - `6136e5b`: ADR, research card, bảng đóng góp, `hidden_selfcheck.json`
-- File: `src/lab8/shapes/workflow.py`, `src/tests/test_workflow_extra.py`, `report/team/decision_adr.md`, `report/team/research_card.md`.
+  - Commit sau `6136e5b`: rà research card, `group_report.md`, cập nhật báo cáo này và `TEAM.md`
+- File: `src/lab8/shapes/workflow.py`, `src/tests/test_workflow_extra.py`, `report/team/decision_adr.md`, `report/team/research_card.md`, `report/team/group_report.md`.
 - Kết quả chạy trong `src/` trên code cuối (`12936a8`):
 
   | Lệnh | Kết quả |
@@ -76,7 +96,7 @@ Người 1 trong phân việc của nhóm (`PHAN_VIEC.md`):
 ## 5. Công cụ AI đã dùng
 
 - **Công cụ:** Claude Code (Claude Opus 5.5) trong VS Code.
-- **Dùng vào việc gì:** đọc đề và contract, đề xuất cách chia việc, viết `workflow.py` và `test_workflow_extra.py`, chạy test, benchmark và các lệnh git, quét trace, soạn ADR, research card và báo cáo này.
+- **Dùng vào việc gì:** đọc đề và contract, đề xuất cách chia việc, viết `workflow.py` và `test_workflow_extra.py`, chạy test, benchmark và các lệnh git, quét trace, soạn ADR, research card, group report và báo cáo này; đọc `hidden_selfcheck.json` để đối chiếu với báo cáo của người 2.
 - **Cách tự kiểm tra:**
   - Đối chiếu từng nhánh của `workflow.py` với bảng trong `docs/business_rules.md` và `docs/contracts.md`.
   - Xác nhận bằng test thật, không dựa vào lời AI: ma trận student 62/62, cổng host, crash 20/20.
