@@ -14,7 +14,7 @@
 |   1 |        |      |       |        | Shape A `workflow` + integration (merge, cổng host, `check_submission`) |
 |   2 | Phạm Lý Ngọc Đức       |   2A202603991   |   26ai.ducpln@vinuni.edu.vn    |    Ducbaynao    | Shape B `single` (vòng ReAct ≤ 8 bước) |
 |   3 |        |      |       |        | Shape C `orchestrator` + handoff/allowlist |
-|   4 |        |      |       |        | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
+|   4 | Trương Văn Hải         |   2A202604018   |   truongvanhai868@gmail.com    |    haihai       | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
 
 Gợi ý chia vai:
 
@@ -28,6 +28,7 @@ Gợi ý chia vai:
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
 | Phạm Lý Ngọc Đức | Shape B — Single Agent; triển khai run_claim, ReAct, tích hợp host và test cá nhân | Chờ bổ sung sau khi commit trên feat/single | src/tests/test_single_extra.py — test_single_early_exit; test_single_react_reads_order_and_counts_calls; test_single_react_escalates_invisible_order; test_single_step_cap_returns_failed_without_refund; test_single_crash_resumes_with_one_refund; test_single_retry_changed_quote_preserves_committed_refund (12 trường hợp) |
+| Trương Văn Hải | Ledger/crash/security + benchmark/ADR/report; thực thi crash suite 20/20, rà trace bảo mật, viết test an toàn | 78eae11 | src/tests/test_safety_extra.py — test_approval_expired_denied_on_all_shapes, test_approval_claim_mismatch_denied_on_all_shapes, test_revoked_approval_denied_on_all_shapes, test_order_already_refunded_denied_on_all_shapes, test_t14_top_up_difference_on_all_shapes, test_no_secret_or_pii_leak_in_trace_on_all_shapes (18 trường hợp) |
 
 ## Cá nhân
 
@@ -57,3 +58,22 @@ Sao chép mục dưới đây cho từng thành viên.
 - Tôi ghi nhận bộ pytest mặc định đạt 66 passed, 248 deselected; ma trận single đạt 62 passed, 252 deselected; test cá nhân đạt 12 passed. git diff --check kết thúc thành công.
 - Tôi kiểm tra C-001 hai lần trên cùng DB, cả hai lần đều resolved với quote 35.000đ, một refund 35.000đ và một audit committed. Run ID dẫn chứng là `R-single-C-001-s11`.
 - Báo cáo cá nhân của tôi nằm tại [2A202603991_PhamLyNgocDuc.md](report/team/2A202603991_PhamLyNgocDuc.md). Tôi sẽ bổ sung commit hash sau khi commit phần đóng góp.
+
+## 2A202604018_TruongVanHai
+
+### Phần việc phụ trách
+
+- Tôi phụ trách Ledger / Crash / Security (Người 4 theo [PHAN_VIEC.md](PHAN_VIEC.md)), triển khai kiểm thử an toàn tại `src/tests/test_safety_extra.py` và thực thi crash suite `src/reports/crash.json`.
+
+### Đóng góp cụ thể
+
+- Tôi thực thi `python -m lab8.crash_test --count 20 --out reports/crash.json`, xác nhận đạt 20/20 kịch bản ngắt điện đột ngột và idempotency.
+- Tôi chạy demo `python -m lab8.demo.buggy_workflow` và ghi nhận phân tích về việc checkpoint đơn lẻ không thể thay thế cho ledger với khóa duy nhất `refund:{claim_id}`.
+- Tôi xây dựng 18 trường hợp kiểm thử trong `src/tests/test_safety_extra.py` chạy trên cả 3 shape (workflow, single, orchestrator) kiểm tra các kịch bản approval hết hạn, approval khác claim, approval bị thu hồi, đơn đã hoàn đủ, hoàn bù chênh lệch (T14) và bảo mật trace không rò rỉ secret.
+- Tôi quét regex toàn bộ thư mục `src/traces/` xác nhận không có `CANARY_SECRET_*`, `parent_secret` hay authorization header.
+
+### Bằng chứng
+
+- Tôi ghi nhận kết quả chạy `python -m lab8.crash_test --count 20 --out reports/crash.json` đạt `crash_safety 20/20`.
+- Bộ test cá nhân `python -m pytest -q tests/test_safety_extra.py` đạt `18 passed in 1.22s`. Cổng host `python -m pytest -q` đạt 108 passed.
+- Báo cáo cá nhân của tôi nằm tại [2A202604018_TruongVanHai.md](report/team/2A202604018_TruongVanHai.md). Tôi sẽ bổ sung commit hash sau khi commit phần đóng góp trên feat/safety-tests.
