@@ -4,15 +4,17 @@
 
 - Tên nhóm: Nhom101
 - Lớp: L3B
-- Repo nhóm: `K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents`
-- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents — nhánh làm việc cá nhân `feat/single`; nhánh nộp và commit chốt chờ nhóm cập nhật.
+- Repo nhóm: `K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
+- URL repo, nhánh nộp, commit chốt: https://github.com/Ducbaynao/K5-L3B-DAY08-Nhom101-FromWorkflowsToAgents, nhánh `main`, commit chốt: (điền ở CP5)
 
 ## Thành viên
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Phạm Lý Ngọc Đức | 2A202603991 | 26ai.ducpln@vinuni.edu.vn | Ducbaynao | Shape B — Single Agent |
-|   2 |        |      |       |        |         |
+|   1 |        |      |       |        | Shape A `workflow` + integration (merge, cổng host, `check_submission`) |
+|   2 | Phạm Lý Ngọc Đức       |   2A202603991   |   26ai.ducpln@vinuni.edu.vn    |    Ducbaynao    | Shape B `single` (vòng ReAct ≤ 8 bước) |
+|   3 |        |      |       |        | Shape C `orchestrator` + handoff/allowlist |
+|   4 |        |      |       |        | Ledger/crash/security (crash suite, rà approval & secret trong trace) + benchmark/ADR/report |
 
 Gợi ý chia vai:
 
