@@ -21,7 +21,7 @@
   - Tạo gói `handoff.v1` chỉ chứa các trường trong allowlist và chỉ cấp `READONLY_TOOLS` cho `run_readonly_investigators`.
   - Truyền `crash_at` vào `issue_refund`; khi gặp `InjectedCrash` thì ghi event `crash` vào trace, flush `trace.write()` và re-raise (không nuốt exception).
 - **Thêm test `src/tests/test_orchestrator_handoff.py`:** gồm 4 test kiểm tra Trace contract v1 & không rò rỉ secret, T14 full quote, crash-resume idempotency, và từ chối write tool / lọc extra facts trong `make_handoff`.
-- **Commit chính (hash):** *(điền commit hash sau khi `git commit`)*
+- **Commit chính (hash):** `c58c4c4`
 
 ## 4. Bằng chứng
 
